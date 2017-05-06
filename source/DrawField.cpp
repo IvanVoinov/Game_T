@@ -31,11 +31,11 @@ void DrawField::KeyPressed(int btnCode)
 		m_obj_y++;
 
 	if (m_obj_x <= 1)
-		m_obj_x == 1;
-	else if (m_obj_x >= X_SIZE)
-		m_obj_x = X_SIZE - 1;
-
+		m_obj_x = 1;
+	else if (m_obj_x >= m_main_field_coord_x)
+		m_obj_x = m_main_field_coord_x - 1;
 }
+
 void DrawField::drawMainInfoField()
 {
 	for (int x = 0; x <= m_main_field_coord_x; x++) {
@@ -61,7 +61,6 @@ void DrawField::drawMainInfoField()
 	}
 }
 
-
 void DrawField::getRandomFigure(int xCoord, int yCoord)
 {
 	m_obj_x = xCoord;
@@ -86,7 +85,7 @@ void DrawField::UpdateF(float deltaTime)
 {
 
 	m_speed_figure += deltaTime;
-	if (m_speed_figure >= 0.3f) {
+	if (m_speed_figure >= 0.5f) {
 		SetChar(m_obj_x, m_obj_y, L'.');
 		m_obj_y++;
 
