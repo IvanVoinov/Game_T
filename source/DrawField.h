@@ -7,7 +7,8 @@ public:
 	DrawField();
 	void drawMainInfoField();
 	virtual void UpdateF(float deltaTime);
-	wchar_t getRandomFigure();
+	virtual void KeyPressed(int btnCode);
+	void getRandomFigure(int xCoord, int yCoord);
 private:
 	int m_main_field_coord_x;
 	int m_main_field_coord_y;

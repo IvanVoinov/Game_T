@@ -13,13 +13,29 @@ DrawField::DrawField() : BaseApp(80, 50)
 	m_obj_x = 10;
 	m_obj_y = 1;
 	m_speed_figure = 0.0f;
-	wchar_t nextSym = getRandomFigure();
-	wchar_t currentSym = nextSym;
+	getRandomFigure(m_obj_x, m_obj_y);
+	nextSym = GetChar(m_obj_x, m_obj_y);
+	currentSym = nextSym;
 	srand(time(0));
 
 	drawMainInfoField();
 }
+void DrawField::KeyPressed(int btnCode)
+{
+	if (btnCode == 37)			//left arrow key
+		m_obj_x--;
+	else if (btnCode == 39)		//right arrow key
+		m_obj_x++;
+	//else if (btnCode == 38)		//up arrow key
+	else if (btnCode == 40)		//down arrow key
+		m_obj_y++;
 
+	if (m_obj_x <= 1)
+		m_obj_x == 1;
+	else if (m_obj_x >= X_SIZE)
+		m_obj_x = X_SIZE - 1;
+
+}
 void DrawField::drawMainInfoField()
 {
 	for (int x = 0; x <= m_main_field_coord_x; x++) {
@@ -46,19 +62,24 @@ void DrawField::drawMainInfoField()
 }
 
 
-wchar_t DrawField::getRandomFigure()
+void DrawField::getRandomFigure(int xCoord, int yCoord)
 {
+	m_obj_x = xCoord;
+	m_obj_y = yCoord;
 	int s = 1 + rand() % 3;
 	switch (s)
 	{
 	case 1:
-		return L'@';
+		SetChar(m_obj_x, m_obj_y, L'=');
+		break;
 	case 2:
-		return L'#';
+		SetChar(m_obj_x, m_obj_y, L'#');
+		break;
 	case 3:
-		return L'$';
+		SetChar(m_obj_x, m_obj_y, L'$');
+		break;
 	}
-	return 0;
+	//return 0;
 }
 
 void DrawField::UpdateF(float deltaTime)
@@ -73,8 +94,9 @@ void DrawField::UpdateF(float deltaTime)
 		{
 			m_obj_y = 1;
 			currentSym = nextSym;
-			nextSym = getRandomFigure();
-			SetChar(m_info_field_coord_x -3 , m_info_field_coord_y - 3, nextSym);
+			getRandomFigure(m_obj_x, m_obj_y);
+			nextSym = GetChar(m_obj_x, m_obj_y);
+			SetChar(m_info_field_coord_x - 3 , m_info_field_coord_y - 3, nextSym);
 		}
 
 		SetChar(m_obj_x, m_obj_y, currentSym);		
@@ -82,3 +104,5 @@ void DrawField::UpdateF(float deltaTime)
 		m_speed_figure = 0.0f;
 	}
 }
+
+
