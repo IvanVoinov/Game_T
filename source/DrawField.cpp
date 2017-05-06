@@ -22,12 +22,12 @@ DrawField::DrawField() : BaseApp(80, 50)
 }
 void DrawField::KeyPressed(int btnCode)
 {
-	if (btnCode == 37)			//left arrow key
+	if (btnCode == 75)			//left arrow key
 		m_obj_x--;
-	else if (btnCode == 39)		//right arrow key
+	else if (btnCode == 77)		//right arrow key
 		m_obj_x++;
-	//else if (btnCode == 38)		//up arrow key
-	else if (btnCode == 40)		//down arrow key
+	//else if (btnCode == 72)		//up arrow key
+	else if (btnCode == 80)		//down arrow key
 		m_obj_y++;
 
 	if (m_obj_x <= 1)
