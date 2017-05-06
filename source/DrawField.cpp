@@ -2,16 +2,19 @@
 #include <ctime>
 #include "DrawField.h"
 
+//float DrawField::m_speed_figure = 0;
+
 DrawField::DrawField() : BaseApp(80, 50)
 {
-	m_direction = true;
 	m_main_field_coord_x = 21;
 	m_main_field_coord_y = 16;
 	m_info_field_coord_x = m_main_field_coord_x + 6;
 	m_info_field_coord_y = 6;
 	m_obj_x = 10;
 	m_obj_y = 1;
-
+	m_speed_figure = 0.0f;
+	wchar_t nextSym = getRandomFigure();
+	wchar_t currentSym = nextSym;
 	srand(time(0));
 
 	drawMainInfoField();
@@ -43,7 +46,7 @@ void DrawField::drawMainInfoField()
 }
 
 
-wchar_t getRandSym()
+wchar_t DrawField::getRandomFigure()
 {
 	int s = 1 + rand() % 3;
 	switch (s)
@@ -60,12 +63,9 @@ wchar_t getRandSym()
 
 void DrawField::UpdateF(float deltaTime)
 {
-	static float ourTime = 0.0f;
-	static wchar_t nextSym = getRandSym();
-	static wchar_t currentSym = nextSym;
-	
-	ourTime += deltaTime;
-	if (ourTime >= 0.5f) {
+
+	m_speed_figure += deltaTime;
+	if (m_speed_figure >= 0.3f) {
 		SetChar(m_obj_x, m_obj_y, L'.');
 		m_obj_y++;
 
@@ -73,12 +73,12 @@ void DrawField::UpdateF(float deltaTime)
 		{
 			m_obj_y = 1;
 			currentSym = nextSym;
-			nextSym = getRandSym();
+			nextSym = getRandomFigure();
 			SetChar(m_info_field_coord_x -3 , m_info_field_coord_y - 3, nextSym);
 		}
 
 		SetChar(m_obj_x, m_obj_y, currentSym);		
 
-		ourTime = 0.0f;
+		m_speed_figure = 0.0f;
 	}
 }
