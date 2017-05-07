@@ -22,14 +22,15 @@ DrawField::DrawField() : BaseApp(80, 50)
 }
 void DrawField::KeyPressed(int btnCode)
 {
-	if (btnCode == 75)			//left arrow key
+	m_btn_code = btnCode;
+	if (m_btn_code == 75)			//left arrow key
 		m_obj_x--;
-	else if (btnCode == 77)		//right arrow key
+	else if (m_btn_code == 77)		//right arrow key
 		m_obj_x++;
-	//else if (btnCode == 72)		//up arrow key
-	else if (btnCode == 80)		//down arrow key
+	//else if (m_btn_code == 72)		//up arrow key
+	else if (m_btn_code == 80)		//down arrow key
 		m_obj_y++;
-
+	m_btn_code = 0;
 	if (m_obj_x <= 1)
 		m_obj_x = 1;
 	else if (m_obj_x >= m_main_field_coord_x)
@@ -83,12 +84,11 @@ void DrawField::getRandomFigure(int xCoord, int yCoord)
 
 void DrawField::UpdateF(float deltaTime)
 {
-
 	m_speed_figure += deltaTime;
 	if (m_speed_figure >= 0.5f) {
+		KeyPressed(m_btn_code);
 		SetChar(m_obj_x, m_obj_y, L'.');
 		m_obj_y++;
-
 		if (m_obj_y > m_main_field_coord_y)
 		{
 			m_obj_y = 1;
