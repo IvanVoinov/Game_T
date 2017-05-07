@@ -2,9 +2,7 @@
 #include <ctime>
 #include "DrawField.h"
 
-//float DrawField::m_speed_figure = 0;
-
-DrawField::DrawField() : BaseApp(80, 50)
+DrawField::DrawField() : BaseApp(100, 99)
 {
 	m_main_field_coord_x = 21;
 	m_main_field_coord_y = 16;
@@ -17,24 +15,27 @@ DrawField::DrawField() : BaseApp(80, 50)
 	nextSym = GetChar(m_obj_x, m_obj_y);
 	currentSym = nextSym;
 	srand(time(0));
-
 	drawMainInfoField();
 }
 void DrawField::KeyPressed(int btnCode)
 {
-	m_btn_code = btnCode;
-	if (m_btn_code == 75)			//left arrow key
+	if (btnCode == 75 && m_obj_x > 1)			//left arrow key
+	{
+		SetChar(m_obj_x, m_obj_y, L'.');
 		m_obj_x--;
-	else if (m_btn_code == 77)		//right arrow key
+		SetChar(m_obj_x, m_obj_y, currentSym);		
+	}
+	else if (btnCode == 77 && m_obj_x < m_main_field_coord_x - 1)		//right arrow key
+	{
+		SetChar(m_obj_x, m_obj_y, L'.');
 		m_obj_x++;
-	//else if (m_btn_code == 72)		//up arrow key
-	else if (m_btn_code == 80)		//down arrow key
+		SetChar(m_obj_x, m_obj_y, currentSym);	
+	}
+	else if (btnCode == 80 && m_obj_y < m_main_field_coord_y){		//down arrow key
+		SetChar(m_obj_x, m_obj_y, L'.');
 		m_obj_y++;
-	m_btn_code = 0;
-	if (m_obj_x <= 1)
-		m_obj_x = 1;
-	else if (m_obj_x >= m_main_field_coord_x)
-		m_obj_x = m_main_field_coord_x - 1;
+		SetChar(m_obj_x, m_obj_y, currentSym);	
+	}
 }
 
 void DrawField::drawMainInfoField()
@@ -86,7 +87,6 @@ void DrawField::UpdateF(float deltaTime)
 {
 	m_speed_figure += deltaTime;
 	if (m_speed_figure >= 0.5f) {
-		KeyPressed(m_btn_code);
 		SetChar(m_obj_x, m_obj_y, L'.');
 		m_obj_y++;
 		if (m_obj_y > m_main_field_coord_y)
