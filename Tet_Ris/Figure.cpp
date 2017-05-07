@@ -1,6 +1,6 @@
-#include "Shape.h"
+#include "Figure.h"
 
-static char mShape [7][4][5][5] =		//where '7' - form, '4' - rotation, '5' - horizontal blocks, '5' - vertical blocks
+static char mFigure [7][4][5][5] =		//where '7' - form, '4' - rotation, '5' - horizontal blocks, '5' - vertical blocks
 {
 	// Square
 	{
@@ -225,7 +225,7 @@ static char mShape [7][4][5][5] =		//where '7' - form, '4' - rotation, '5' - hor
 	}
 };
 
-static int mShapeStartPosition  [7][4][2] =				////where '7' - form, '4' - rotation, '2' - position
+static int mFigureStartPosition  [7][4][2] =				////where '7' - form, '4' - rotation, '2' - position
 {
 	/* Square */
 	{
@@ -278,17 +278,17 @@ static int mShapeStartPosition  [7][4][2] =				////where '7' - form, '4' - rotat
 	},
 };
 
-int Shape::getShapeType(int sForm, int sRotation, int sX, int sY)
+int Figure::getFigureType(int paForm, int paRotation, int paX, int paY)
 {
-	return mShape[sForm][sRotation][sX][sY];
+	return mFigure[paForm][paRotation][paX][paY];
 }
 
-int Shape::getXStartPosition(int sForm, int sRotation)
+int Figure::getXStartPosition(int paForm, int paRotation)
 {
-	return mShapeStartPosition[sForm][sRotation][0];
+	return mFigureStartPosition[paForm][paRotation][0];
 }
 
-int Shape::getYStartPosition(int sForm, int sRotation)
+int Figure::getYStartPosition(int paForm, int paRotation)
 {
-	return mShapeStartPosition[sForm][sRotation][1];
+	return mFigureStartPosition[paForm][paRotation][1];
 }

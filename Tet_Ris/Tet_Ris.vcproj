@@ -179,11 +179,15 @@
 				>
 			</File>
 			<File
-				RelativePath="..\source\main.cpp"
+				RelativePath=".\Field.cpp"
 				>
 			</File>
 			<File
-				RelativePath=".\Shape.cpp"
+				RelativePath=".\Figure.cpp"
+				>
+			</File>
+			<File
+				RelativePath="..\source\main.cpp"
 				>
 			</File>
 		</Filter>
@@ -201,11 +205,15 @@
 				>
 			</File>
 			<File
-				RelativePath="..\source\PerformanceCounter.h"
+				RelativePath=".\Field.h"
 				>
 			</File>
 			<File
-				RelativePath=".\Shape.h"
+				RelativePath=".\Figure.h"
+				>
+			</File>
+			<File
+				RelativePath="..\source\PerformanceCounter.h"
 				>
 			</File>
 		</Filter>
