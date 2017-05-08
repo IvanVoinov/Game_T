@@ -29,7 +29,7 @@ bool Field::isFreePlace(int paX, int paY)
 bool Field::isPossibleMove(int paX, int paY, int paBlock, int paRotation)
 {
 	for (int i1 = paX, i2 = 0; i1 < paX + SHAPES_SYMBOLS; i1++, i2++){
-		for (int j1 = paY, j2 = 0; j1 < paY + SHAPES_SYMBOLS; j1++; j2++){
+		for (int j1 = paY, j2 = 0; j1 < paY + SHAPES_SYMBOLS; j1++, j2++){
 			if (i1 < 0 
 				|| i1 > MAIN_FIELD_WIDHT - 1 
 				|| j1 > MAIN_FIELD_HEIGHT - 1){
@@ -51,7 +51,7 @@ void Field::StoreFigure(int paX, int paY, int paBlock, int paRotation)
 	for (int i1 = paX, i2 = 0; i1 < paX + SHAPES_SYMBOLS; i1++, i2++){
 		for (int j1 = paY, j2 = 0; j1 < paY + SHAPES_SYMBOLS; j1++, j2++){
 			if(m_Figure->getFigureType(paBlock, paRotation, j2, i2) != 0)
-				m_Figure[i1][j1] = POS_FILLED;
+				m_Field[i1][j1] = POS_FILLED;
 		}
 	}
 }
@@ -61,7 +61,7 @@ void Field::deletePossibleLine()
 	for (int j = 0; j < MAIN_FIELD_HEIGHT; j++){
 		int i = 0;
 		while (i < MAIN_FIELD_WIDHT){
-			if (m_Figure[i][j] != POS_FILLED)
+			if (m_Field[i][j] != POS_FILLED)
 				break;
 			i++;
 		}
@@ -72,7 +72,7 @@ void Field::deletePossibleLine()
 bool Field::isGameOver()
 {
 	for (int i = 0; i < MAIN_FIELD_WIDHT; i++){
-		if (m_Figure[i][0] == POS_FILLED)
+		if (m_Field[i][0] == POS_FILLED)
 			return true;
 	}
 	return false;
@@ -107,7 +107,7 @@ void Field::deleteLine(int paY)
 {
 	for (int j = paY; j > 0; j--){
 		for (int i = 0; i < MAIN_FIELD_WIDHT; i++){
-			m_Figure[i][j] = m_Figure[i][j-1];
+			m_Field[i][j] = m_Field[i][j-1];
 		}
 	}
 }
