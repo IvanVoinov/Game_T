@@ -120,7 +120,6 @@ void BaseApp::Run()
 			TCHAR  szbuff[255];
 			StringCchPrintf(szbuff, 255, TEXT("FPS: %d"), counter);
 			SetConsoleTitle(szbuff);
-
 			counter = 0;
 			sum = 0;
 		}

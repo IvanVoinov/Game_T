@@ -1,10 +1,9 @@
-#include <iostream>
-#include "DrawField.h"
+#include "Tetis.h"
 
 int main()
 {
 	
-	DrawField app;
+	Tetis app;
 	app.Run();
 	return 0;
 }

@@ -10,7 +10,7 @@
 class Field
 {
 public:
-	Field(Figure* paFigure, int paScreenHeight);
+	Field(Figure* paFigure);
 	int getXPosition(int paPos);
 	int getYPosition(int paPos);
 	bool isFreePlace(int paX, int paY);

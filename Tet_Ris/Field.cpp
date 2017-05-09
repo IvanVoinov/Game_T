@@ -1,9 +1,10 @@
 #include "Field.h"
 
+//need to fix problem with SetChar metod
 
-Field::Field(Figure* paFigure, int paScreenHeight)
+
+Field::Field(Figure* paFigure)
 {
-	m_ScreenHeight = paScreenHeight;
 	m_Figure = paFigure;
 	initBoard();
 }
@@ -80,7 +81,12 @@ bool Field::isGameOver()
 
 void Field::initBoard()
 {
-	for (int x = 0; x <= MAIN_FIELD_WIDHT; x++) {
+	for(int i = 0; i < MAIN_FIELD_WIDHT; i++){
+		for(int j = 0; j < MAIN_FIELD_HEIGHT; j++){
+			m_Field[i][j] = POS_FREE;
+		}
+	}
+	/*for (int x = 0; x <= MAIN_FIELD_WIDHT; x++) {
 		for (int y = 0; y <= MAIN_FIELD_HEIGHT + 1; y++) {
 			if ((x == 0 && y <= MAIN_FIELD_HEIGHT)
 				|| (x == MAIN_FIELD_WIDHT && y <= MAIN_FIELD_HEIGHT)
@@ -100,7 +106,7 @@ void Field::initBoard()
 			else
 				m_Field[x][y] = POS_FREE;
 		}
-	}
+	}*/
 }
 
 void Field::deleteLine(int paY)
