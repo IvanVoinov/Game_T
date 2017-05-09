@@ -26,10 +26,4 @@ void expml::drawBoard()
 				SetChar(x, y, '#');
 		}
 	}
-	/*for (int x = 0; x < 22; x++){
-		for (int y = 0; y < 16; y++){
-			if (!m_Field->isFreePlace(x, y))
-				SetChar(x, y, '*');
-		}
-	}*/
 }

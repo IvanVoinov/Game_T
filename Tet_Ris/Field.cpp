@@ -9,38 +9,25 @@ Field::Field(Figure* paFigure)
 	initBoard();
 }
 
-int Field::getXPosition(int paPos)
-{
-	return MAIN_FIELD_WIDHT/2 + paPos;
-}
-
-int Field::getYPosition(int paPos)
-{
-	return MAIN_FIELD_HEIGHT + paPos;
-}
-
 bool Field::isFreePlace(int paX, int paY)
-{
-	if (m_Field[paX][paY] == POS_FREE)
-		return true;
-	else
-		return false;
+{ 
+ 	if ((paX >= 0 && paX < MAIN_FIELD_WIDHT) || (paY >= 0 && paY < MAIN_FIELD_HEIGHT)){
+		if (m_Field[paY][paX] == POS_FREE)
+			return true;
+		else
+			return false;
+	}
+	return false;
 }
 
 bool Field::isPossibleMove(int paX, int paY, int paBlock, int paRotation)
 {
-	for (int i1 = paX, i2 = 0; i1 < paX + SHAPES_SYMBOLS; i1++, i2++){
-		for (int j1 = paY, j2 = 0; j1 < paY + SHAPES_SYMBOLS; j1++, j2++){
-			if (i1 < 0 
-				|| i1 > MAIN_FIELD_WIDHT - 1 
-				|| j1 > MAIN_FIELD_HEIGHT - 1){
-				if (m_Figure->getFigureType(paBlock, paRotation, j2, i2) != 0)
-						return 0;
-			}
-			if (j1 >= 0){
-				if ((m_Figure->getFigureType(paBlock, paRotation, j2, i2) != 0)
-					&& (!isFreePlace(i1, j1)))
+	for (int i = 0; i < SHAPES_SYMBOLS; i++){
+		for (int j = 0; j < SHAPES_SYMBOLS; j++){
+			if (m_Figure->getFigureType(paBlock, paRotation, j, i) != 0){
+				if (!(isFreePlace(paX + j, paY + i))) {
 					return false;
+				}
 			}
 		}
 	}
@@ -49,12 +36,14 @@ bool Field::isPossibleMove(int paX, int paY, int paBlock, int paRotation)
 
 void Field::StoreFigure(int paX, int paY, int paBlock, int paRotation)
 {
-	for (int i1 = paX, i2 = 0; i1 < paX + SHAPES_SYMBOLS; i1++, i2++){
-		for (int j1 = paY, j2 = 0; j1 < paY + SHAPES_SYMBOLS; j1++, j2++){
-			if(m_Figure->getFigureType(paBlock, paRotation, j2, i2) != 0)
-				m_Field[i1][j1] = POS_FILLED;
+	for (int x = 0; x < SHAPES_SYMBOLS; x++){
+		for (int y = 0; y < SHAPES_SYMBOLS; y++){
+			if (m_Figure->getFigureType(paBlock, paRotation, x, y) != 0){
+				m_Field[paY + y][paX + x] = POS_FILLED;
+			}
 		}
 	}
+
 }
 
 void Field::deletePossibleLine()
@@ -81,32 +70,17 @@ bool Field::isGameOver()
 
 void Field::initBoard()
 {
-	for(int i = 0; i < MAIN_FIELD_WIDHT; i++){
-		for(int j = 0; j < MAIN_FIELD_HEIGHT; j++){
-			m_Field[i][j] = POS_FREE;
+	for(int x = 0; x < MAIN_FIELD_WIDHT; x++){
+		for (int y = 0; y < MAIN_FIELD_HEIGHT; y++){
+			if ((x == 0) || (x == MAIN_FIELD_WIDHT -1)
+				|| (y == 0) || (y == MAIN_FIELD_HEIGHT -1)) {
+				m_Field[y][x] = POS_FILLED;
+			}
+			else {
+				m_Field[y][x] = POS_FREE;
+			}
 		}
 	}
-	/*for (int x = 0; x <= MAIN_FIELD_WIDHT; x++) {
-		for (int y = 0; y <= MAIN_FIELD_HEIGHT + 1; y++) {
-			if ((x == 0 && y <= MAIN_FIELD_HEIGHT)
-				|| (x == MAIN_FIELD_WIDHT && y <= MAIN_FIELD_HEIGHT)
-				|| (x <= MAIN_FIELD_WIDHT && y == 0)
-				|| (x <= MAIN_FIELD_WIDHT && y == MAIN_FIELD_HEIGHT + 1))
-				SetChar(x, y, '#');
-			else
-				m_Field[x][y] = POS_FREE;
-		}
-	}
-	for (int x = MAIN_FIELD_WIDHT + 1; x <= INFO_FIELD_WIDHT; x++) {
-		for (int y = 0; y <= INFO_FIELD_HEIGHT; y++) {
-			if ((x < INFO_FIELD_WIDHT && y == 0)
-				|| (x == INFO_FIELD_WIDHT && y <= INFO_FIELD_HEIGHT)
-				|| (x < INFO_FIELD_WIDHT && y == INFO_FIELD_HEIGHT))
-				SetChar(x, y, '#');
-			else
-				m_Field[x][y] = POS_FREE;
-		}
-	}*/
 }
 
 void Field::deleteLine(int paY)

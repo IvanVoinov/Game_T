@@ -13,13 +13,18 @@ public:
 	void drawScene();
 	void createNewFigure();
 	void drawBoard();
+	void figureMoveDown();
+	void moveLeft();
+	void moveRight();
+	void changeRotation();
+	void keyDown();
 	int m_PosX, m_PosY;
 	int m_Form, m_Rotation;
+	Figure* m_Figure;
 private:
 	int m_NextPosX, m_NextPosY;
 	int m_NextForm, m_NextRotation;
-	Field* m_Field;
-	Figure* m_Figure;
+	Field* pm_Field;
 	BaseApp* pm_BaseApp;
 	int getRandom(int paA, int paB);
 	void initGame();

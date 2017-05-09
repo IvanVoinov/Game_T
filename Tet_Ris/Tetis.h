@@ -9,10 +9,11 @@ class Tetis : public BaseApp
 public:
 	Tetis();
 	virtual void UpdateF(float deltaTime);
-	virtual void KeyPressed(int btnCode){};
+	virtual void KeyPressed(int btnCode);
 	void SetGame(Game* pGame);
 private:
 	Game* pm_Game;
+	Field* m_Field;
 	const float m_WaitTime;
 	float m_diffTime;
 };

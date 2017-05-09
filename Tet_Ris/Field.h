@@ -11,17 +11,15 @@ class Field
 {
 public:
 	Field(Figure* paFigure);
-	int getXPosition(int paPos);
-	int getYPosition(int paPos);
 	bool isFreePlace(int paX, int paY);
 	bool isPossibleMove(int paX, int paY, int paBlock, int paRotation);
 	void StoreFigure(int paX, int paY, int paBlock, int paRotation);
 	void deletePossibleLine();
 	bool isGameOver();
-
+	
 private:
-	enum {POS_FREE, POS_FILLED};
-	int m_Field[MAIN_FIELD_WIDHT][MAIN_FIELD_HEIGHT];
+	int m_Field[MAIN_FIELD_HEIGHT][MAIN_FIELD_WIDHT];
+	enum {POS_FREE = 0, POS_FILLED};
 	Figure* m_Figure;
 	int m_ScreenHeight;
 	void initBoard();
