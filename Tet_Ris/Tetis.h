@@ -12,8 +12,9 @@ public:
 	virtual void KeyPressed(int btnCode);
 	void SetGame(Game* pGame);
 private:
-	Game* pm_Game;
-	Field* m_Field;
+	Figure mfigure;
+	Field mfield;
+	Game m_Game;
 	const float m_WaitTime;
 	float m_diffTime;
 };

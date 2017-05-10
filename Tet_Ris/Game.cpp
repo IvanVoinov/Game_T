@@ -1,14 +1,14 @@
 #include "Game.h"
 
 Game::Game(Field *pField, Figure* pFigure, BaseApp* pBaseApp)
-: m_PosX(0)
-, m_PosY(0)
-, m_Form(0)
-, m_Rotation(0)
-, m_NextPosX(0)
-, m_NextPosY(0)
-, m_NextForm(0)
-, m_NextRotation(0)
+	: m_PosX(0)
+	, m_PosY(0)
+	, m_Form(0)
+	, m_Rotation(0)
+	, m_NextPosX(0)
+	, m_NextPosY(0)
+	, m_NextForm(0)
+	, m_NextRotation(0)
 {
 	pm_BaseApp = pBaseApp;
 	pm_Field = pField;
@@ -31,13 +31,12 @@ void Game::initGame()
 
 void Game::figureMoveDown()
 {
-	if (pm_Field->isPossibleMove(m_PosX, m_PosY + 1, m_Form, m_Rotation)){
-		m_PosY ++;
+	if (pm_Field->isPossibleMove(m_PosX, m_PosY + 1, m_Form, m_Rotation)) {
+		m_PosY++;
 		drawFigure(m_PosX, m_PosY, m_Form, m_Rotation);
 	}
 	else {
-		if (pm_Field->isGameOver())
-			exit(0);
+
 		pm_Field->StoreFigure(m_PosX, m_PosY, m_Form, m_Rotation);
 		pm_Field->deletePossibleLine();
 		m_Form = m_NextForm;
@@ -46,6 +45,10 @@ void Game::figureMoveDown()
 		m_PosY = m_Figure->getYStartPosition(m_Form, m_Rotation);
 		m_NextForm = getRandom(0, 6);
 		m_NextRotation = getRandom(0, 3);
+		if (!pm_Field->isPossibleMove(m_PosX, m_PosY, m_Form, m_Rotation))
+		{
+			exit(0);
+		}
 	}
 
 }
@@ -73,8 +76,8 @@ int Game::getRandom(int paA, int paB)
 
 void Game::drawFigure(int paX, int paY, int paFigure, int paRotation)
 {
-	for (int i = 0; i < SHAPES_SYMBOLS; i++){
-		for (int j = 0; j < SHAPES_SYMBOLS; j++){
+	for (int i = 0; i < SHAPES_SYMBOLS; i++) {
+		for (int j = 0; j < SHAPES_SYMBOLS; j++) {
 			if (m_Figure->getFigureType(paFigure, paRotation, j, i) != 0)
 				pm_BaseApp->SetChar(j + paX, i + paY, '*');
 		}
@@ -83,8 +86,8 @@ void Game::drawFigure(int paX, int paY, int paFigure, int paRotation)
 
 void Game::drawBoard()
 {
-	for (int x = 0; x < MAIN_FIELD_WIDHT; x++){
-		for (int y = 0; y < MAIN_FIELD_HEIGHT; y++){
+	for (int x = 0; x < MAIN_FIELD_WIDHT; x++) {
+		for (int y = 0; y < MAIN_FIELD_HEIGHT; y++) {
 			if (!pm_Field->isFreePlace(x, y))
 				pm_BaseApp->SetChar(x, y, '*');
 			else
@@ -109,14 +112,14 @@ void Game::drawBoard()
 
 void Game::moveLeft()
 {
-	if(pm_Field->isPossibleMove(m_PosX - 1, m_PosY, m_Form, m_Rotation)){
+	if (pm_Field->isPossibleMove(m_PosX - 1, m_PosY, m_Form, m_Rotation)) {
 		m_PosX--;
 		drawFigure(m_PosX, m_PosY, m_Form, m_Rotation);
 	}
 }
 void Game::moveRight()
 {
-	if(pm_Field->isPossibleMove(m_PosX + 1, m_PosY, m_Form, m_Rotation)){
+	if (pm_Field->isPossibleMove(m_PosX + 1, m_PosY, m_Form, m_Rotation)) {
 		m_PosX++;
 		drawFigure(m_PosX, m_PosY, m_Form, m_Rotation);
 	}
@@ -124,15 +127,15 @@ void Game::moveRight()
 
 void Game::changeRotation()
 {
-	int newRotation = (m_Rotation + 1) % 4; // constant
-	if(pm_Field->isPossibleMove(m_PosX, m_PosY, m_Form, newRotation)) {
+	int newRotation = (m_Rotation + 1) % 4; // constant zameni na constantu
+	if (pm_Field->isPossibleMove(m_PosX, m_PosY, m_Form, newRotation)) {
 		m_Rotation = newRotation;
 		drawFigure(m_PosX, m_PosY, m_Form, m_Rotation);
 	}
 }
 void Game::keyDown()
 {
-	if(pm_Field->isPossibleMove(m_PosX, m_PosY + 1, m_Form, m_Rotation)) {
+	if (pm_Field->isPossibleMove(m_PosX, m_PosY + 1, m_Form, m_Rotation)) {
 		m_PosY++;
 		drawFigure(m_PosX, m_PosY, m_Form, m_Rotation);
 	}
@@ -140,9 +143,9 @@ void Game::keyDown()
 
 void Game::throwFigure()
 {
-	while(pm_Field->isPossibleMove(m_PosX, m_PosY + 1, m_Form, m_Rotation))
+	while (pm_Field->isPossibleMove(m_PosX, m_PosY + 1, m_Form, m_Rotation))
 	{
 		m_PosY++;
 	}
-		drawFigure(m_PosX, m_PosY, m_Form, m_Rotation);
-}      
+	drawFigure(m_PosX, m_PosY, m_Form, m_Rotation);
+}
