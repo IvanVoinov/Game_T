@@ -18,13 +18,14 @@ public:
 	void moveRight();
 	void changeRotation();
 	void keyDown();
+	void throwFigure();
 	int m_PosX, m_PosY;
 	int m_Form, m_Rotation;
 	Figure* m_Figure;
+	Field* pm_Field;
 private:
 	int m_NextPosX, m_NextPosY;
 	int m_NextForm, m_NextRotation;
-	Field* pm_Field;
 	BaseApp* pm_BaseApp;
 	int getRandom(int paA, int paB);
 	void initGame();

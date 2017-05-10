@@ -16,9 +16,8 @@ public:
 	void StoreFigure(int paX, int paY, int paBlock, int paRotation);
 	void deletePossibleLine();
 	bool isGameOver();
-	
-private:
 	int m_Field[MAIN_FIELD_HEIGHT][MAIN_FIELD_WIDHT];
+private:
 	enum {POS_FREE = 0, POS_FILLED};
 	Figure* m_Figure;
 	int m_ScreenHeight;

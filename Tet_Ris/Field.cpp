@@ -48,21 +48,22 @@ void Field::StoreFigure(int paX, int paY, int paBlock, int paRotation)
 
 void Field::deletePossibleLine()
 {
-	for (int j = 0; j < MAIN_FIELD_HEIGHT; j++){
-		int i = 0;
-		while (i < MAIN_FIELD_WIDHT){
-			if (m_Field[i][j] != POS_FILLED)
+	for (int y = 1; y < MAIN_FIELD_HEIGHT - 1; y++){
+		int x = 1;
+		while (x < MAIN_FIELD_WIDHT - 1){
+			if (m_Field[y][x] != POS_FILLED)
 				break;
-			i++;
+			x++;
 		}
-		if (i == MAIN_FIELD_WIDHT) deleteLine(j);
+		if (x == MAIN_FIELD_WIDHT - 1) 
+			deleteLine(y);
 	}
 }
 
 bool Field::isGameOver()
 {
-	for (int i = 0; i < MAIN_FIELD_WIDHT; i++){
-		if (m_Field[i][0] == POS_FILLED)
+	for (int i = 1; i < MAIN_FIELD_WIDHT - 1; i++){
+		if (m_Field[1][i] == POS_FILLED)
 			return true;
 	}
 	return false;
@@ -72,8 +73,7 @@ void Field::initBoard()
 {
 	for(int x = 0; x < MAIN_FIELD_WIDHT; x++){
 		for (int y = 0; y < MAIN_FIELD_HEIGHT; y++){
-			if ((x == 0) || (x == MAIN_FIELD_WIDHT -1)
-				|| (y == 0) || (y == MAIN_FIELD_HEIGHT -1)) {
+			if (x == 0 || x == MAIN_FIELD_WIDHT - 1 || y == 0 || y == MAIN_FIELD_HEIGHT - 1) {
 				m_Field[y][x] = POS_FILLED;
 			}
 			else {
@@ -83,11 +83,11 @@ void Field::initBoard()
 	}
 }
 
-void Field::deleteLine(int paY)
+void Field::deleteLine(int line)
 {
-	for (int j = paY; j > 0; j--){
-		for (int i = 0; i < MAIN_FIELD_WIDHT; i++){
-			m_Field[i][j] = m_Field[i][j-1];
+	for (int y = line; y > 1; y--){
+		for (int x = 1; x < MAIN_FIELD_WIDHT - 1; x++){
+			m_Field[y][x] = m_Field[y-1][x];
 		}
 	}
 }

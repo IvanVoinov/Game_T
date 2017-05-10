@@ -14,6 +14,14 @@ void Tetis::KeyPressed(int btnCode)
 	else if (btnCode == 72){					//up key - rotation
 		pm_Game->changeRotation();
 	}
+	else if (btnCode == 80)
+	{
+		pm_Game->keyDown();
+	}
+	else if (btnCode == 32)
+	{
+		pm_Game->throwFigure();
+	}
 }
 
 Tetis::Tetis() : m_WaitTime(0.58), pm_Game(0)

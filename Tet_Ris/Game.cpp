@@ -25,8 +25,8 @@ void Game::initGame()
 	m_PosY = m_Figure->getYStartPosition(m_Form, m_Rotation);
 	m_NextForm = getRandom(0, 6);
 	m_NextRotation = getRandom(0, 3);
-	m_NextPosX = INFO_FIELD_WIDHT - 3;
-	m_NextPosY = INFO_FIELD_HEIGHT - 3;
+	m_NextPosX = INFO_FIELD_WIDHT - 6;
+	m_NextPosY = INFO_FIELD_HEIGHT - 5;
 }
 
 void Game::figureMoveDown()
@@ -36,7 +36,10 @@ void Game::figureMoveDown()
 		drawFigure(m_PosX, m_PosY, m_Form, m_Rotation);
 	}
 	else {
+		if (pm_Field->isGameOver())
+			exit(0);
 		pm_Field->StoreFigure(m_PosX, m_PosY, m_Form, m_Rotation);
+		pm_Field->deletePossibleLine();
 		m_Form = m_NextForm;
 		m_Rotation = m_NextRotation;
 		m_PosX = (MAIN_FIELD_WIDHT / 2) + m_Figure->getXStartPosition(m_Form, m_Rotation);
@@ -90,19 +93,16 @@ void Game::drawBoard()
 	}
 	for (int x = 0; x < MAIN_FIELD_WIDHT; x++) {
 		for (int y = 0; y < MAIN_FIELD_HEIGHT; y++) {
-			if ((x == 0)
-				|| (x == MAIN_FIELD_WIDHT - 1)
-				|| (y == 0)
-				|| (y == MAIN_FIELD_HEIGHT - 1))
+			if (x == 0 || x == MAIN_FIELD_WIDHT - 1 || y == 0 || y == MAIN_FIELD_HEIGHT - 1)
 				pm_BaseApp->SetChar(x, y, '#');
 		}
 	}
-	for (int x = MAIN_FIELD_WIDHT + 1; x <= INFO_FIELD_WIDHT; x++) {
+	for (int x = MAIN_FIELD_WIDHT; x < INFO_FIELD_WIDHT; x++) {
 		for (int y = 0; y <= INFO_FIELD_HEIGHT; y++) {
-			if ((x < INFO_FIELD_WIDHT && y == 0)
-				|| (x == INFO_FIELD_WIDHT && y <= INFO_FIELD_HEIGHT)
-				|| (x < INFO_FIELD_WIDHT && y == INFO_FIELD_HEIGHT))
+			if (x < INFO_FIELD_WIDHT && y == 0 || x == INFO_FIELD_WIDHT - 1 || y == INFO_FIELD_HEIGHT)
 				pm_BaseApp->SetChar(x, y, '#');
+			else
+				pm_BaseApp->SetChar(x, y, '.');
 		}
 	}
 }
@@ -130,4 +130,19 @@ void Game::changeRotation()
 		drawFigure(m_PosX, m_PosY, m_Form, m_Rotation);
 	}
 }
-void Game::keyDown(){}
+void Game::keyDown()
+{
+	if(pm_Field->isPossibleMove(m_PosX, m_PosY + 1, m_Form, m_Rotation)) {
+		m_PosY++;
+		drawFigure(m_PosX, m_PosY, m_Form, m_Rotation);
+	}
+}
+
+void Game::throwFigure()
+{
+	while(pm_Field->isPossibleMove(m_PosX, m_PosY + 1, m_Form, m_Rotation))
+	{
+		m_PosY++;
+	}
+		drawFigure(m_PosX, m_PosY, m_Form, m_Rotation);
+}      
